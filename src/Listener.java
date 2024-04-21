@@ -19,12 +19,15 @@ public class Listener implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-    if (JOptionPane.showConfirmDialog(frame,"Do you really want to close the window?") == JOptionPane.YES_OPTION){
-        frame.dispose();
-        System.exit(0);
+        int choice = JOptionPane.showConfirmDialog(frame, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            frame.dispose();
+            System.exit(0);
+        } else {
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    }
 
-    }
-    }
 
 
     @Override

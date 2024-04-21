@@ -52,12 +52,9 @@ public class Menu extends JFrame implements ActionListener {
 
             JOptionPane.showMessageDialog(this, "Zobrazit leaderboard");
         } else if (e.getSource() == exitButton) {
-
-            if (JOptionPane.showConfirmDialog(this, "Do you really want to close the window?") == JOptionPane.YES_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 dispose();
-                System.exit(0);
             }
         }
     }
-
 }
