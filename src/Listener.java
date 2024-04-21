@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -18,11 +19,13 @@ public class Listener implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (JOptionPane.showConfirmDialog(frame, "Do you really want to close the window?") == JOptionPane.YES_OPTION) {
-            frame.dispose();
-            System.exit(0);
-        }
+    if (JOptionPane.showConfirmDialog(frame,"Do you really want to close the window?") == JOptionPane.YES_OPTION){
+        frame.dispose();
+        System.exit(0);
+
     }
+    }
+
 
     @Override
     public void windowClosed(WindowEvent e) {
