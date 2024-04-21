@@ -7,7 +7,7 @@ public class Menu extends JFrame implements ActionListener {
 
     public Menu() {
         setTitle("Flappy Bird");
-        setSize(300, 200);
+        setSize(400, 600);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -47,10 +47,8 @@ public class Menu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
 
-            JOptionPane.showMessageDialog(this, "Spustit hru Flappy Bird");
         } else if (e.getSource() == leaderboardButton) {
 
-            JOptionPane.showMessageDialog(this, "Zobrazit leaderboard");
         } else if (e.getSource() == exitButton) {
             if (JOptionPane.showConfirmDialog(this, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 dispose();
