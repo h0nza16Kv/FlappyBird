@@ -7,7 +7,7 @@ public class Menu extends JFrame implements ActionListener {
 
     public Menu() {
         setTitle("Flappy Bird");
-        setSize(400, 600);
+        setSize(450, 650);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
