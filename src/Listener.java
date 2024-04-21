@@ -5,7 +5,7 @@ import java.awt.event.WindowListener;
 
 public class Listener implements WindowListener {
 
-    private JFrame frame;
+    public JFrame frame;
 
     public Listener(JFrame frame) {
         this.frame = frame;
