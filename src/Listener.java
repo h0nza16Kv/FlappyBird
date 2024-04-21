@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Listener implements WindowListener  {
+public class Listener implements WindowListener {
 
     private JFrame frame;
 
@@ -18,7 +18,7 @@ public class Listener implements WindowListener  {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (JOptionPane.showConfirmDialog(frame, "Do you really want to close the window?") == JOptionPane.YES_OPTION){
+        if (JOptionPane.showConfirmDialog(frame, "Do you really want to close the window?") == JOptionPane.YES_OPTION) {
             frame.dispose();
             System.exit(0);
         }
