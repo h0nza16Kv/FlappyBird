@@ -1,11 +1,11 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class Listener implements WindowListener {
 
     public JFrame frame;
+
 
     public Listener(JFrame frame) {
         this.frame = frame;
@@ -27,7 +27,6 @@ public class Listener implements WindowListener {
             frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }
     }
-
 
 
     @Override
