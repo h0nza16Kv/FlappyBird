@@ -15,7 +15,6 @@ public class Bird {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.velocityY = 0;
         this.gravity = 1;
     }
 

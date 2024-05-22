@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 
 public class BirdChoose extends JPanel {
     private String[] birdImage;
@@ -20,7 +21,7 @@ public class BirdChoose extends JPanel {
         };
 
         currentBirdIndex = 0;
-        birdLabel = new JLabel(createImageIcon(birdImage[currentBirdIndex]), JLabel.CENTER); // Vytvoření ImageIcon z názvu
+        birdLabel = new JLabel(createImageIcon(birdImage[currentBirdIndex]), JLabel.CENTER);
 
         JPanel imagePanel = new JPanel(new GridBagLayout());
         imagePanel.setBackground(Color.BLACK);
@@ -42,6 +43,7 @@ public class BirdChoose extends JPanel {
         add(controlPanel, BorderLayout.SOUTH);
 
         setFocusable(true);
+
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -75,7 +77,7 @@ public class BirdChoose extends JPanel {
 
     //ChatGPT
     public ImageIcon createImageIcon(String fileName) {
-        java.net.URL imgURL = getClass().getResource(fileName);
-            return new ImageIcon(imgURL);
+        URL imgURL = getClass().getResource(fileName);
+        return new ImageIcon(imgURL);
     }
 }
