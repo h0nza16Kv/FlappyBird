@@ -70,7 +70,7 @@ public class EndScreen extends JPanel {
         if (e.getSource() == restartButton) {
             endFrame.dispose();
             JFrame frame = new JFrame("Flappy Bird");
-            FlappyBird flappyBird = new FlappyBird(new ImageIcon(getClass().getResource("bird_image.png")).getImage()); // Change "bird_image.png" to your actual bird image path
+            FlappyBird flappyBird = new FlappyBird(new ImageIcon(getClass().getResource("bird_image.png")).getImage());
             frame.getContentPane().add(flappyBird);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
