@@ -3,101 +3,91 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class EndScreen extends JPanel {
-    private JButton startButton;
-    private JButton exitButton;
-    private JButton backButton;
-    private JLabel scoreLabel;
+    private JButton restartButton, menuButton, exitButton;
+    private JFrame endFrame;
 
     public EndScreen(int score) {
-        setPreferredSize(new Dimension(600, 600));
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         setForeground(Color.BLACK);
 
+        JPanel topEmptyPanel = new JPanel();
+        topEmptyPanel.setPreferredSize(new Dimension(1, 50));
+        add(topEmptyPanel, BorderLayout.NORTH);
+        topEmptyPanel.setBackground(Color.BLACK);
+
         JLabel gameOverLabel = new JLabel("GAME OVER", SwingConstants.CENTER);
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 70));
         gameOverLabel.setForeground(Color.YELLOW);
-        gameOverLabel.setBackground(Color.BLACK);
+        add(gameOverLabel, BorderLayout.CENTER);
 
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 80));
-
-        scoreLabel = new JLabel("SCORE: " + score, SwingConstants.CENTER);
+        JLabel scoreLabel = new JLabel("SCORE: " + score, SwingConstants.CENTER);
+        scoreLabel.setFont(new Font("Arial", Font.PLAIN, 40));
         scoreLabel.setForeground(Color.YELLOW);
-        scoreLabel.setBackground(Color.BLACK);
-        scoreLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+        add(scoreLabel, BorderLayout.CENTER);
+
+        JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        buttonContainer.setOpaque(false);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new GridLayout(3, 1, 0, 20));
+        buttonPanel.setBackground(Color.BLACK);
 
-        startButton = new JButton("RESTART");
-        backButton = new JButton("BACK TO MENU");
+        restartButton = new JButton("RESTART");
+        restartButton.setPreferredSize(new Dimension(360, 85));
+        restartButton.setBackground(Color.YELLOW);
+        restartButton.addActionListener(e -> buttonActionPerformed(e));
+        buttonPanel.add(restartButton);
+
+        menuButton = new JButton("MENU");
+        menuButton.setPreferredSize(new Dimension(360, 85));
+        menuButton.setBackground(Color.YELLOW);
+        menuButton.addActionListener(e -> buttonActionPerformed(e));
+        buttonPanel.add(menuButton);
+
         exitButton = new JButton("EXIT");
-
-        Dimension buttonSize = new Dimension(180, 100);
-
-        startButton.setPreferredSize(buttonSize);
-        backButton.setPreferredSize(buttonSize);
-        exitButton.setPreferredSize(buttonSize);
-
-        startButton.setBackground(Color.YELLOW);
-        backButton.setBackground(Color.YELLOW);
+        exitButton.setPreferredSize(new Dimension(360, 85));
         exitButton.setBackground(Color.YELLOW);
-
-        startButton.setForeground(Color.BLACK);
-        backButton.setForeground(Color.BLACK);
-        exitButton.setForeground(Color.BLACK);
-
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                closeEndScreen();
-                startGame();
-            }
-        });
-
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                closeEndScreen();
-                new Menu();
-            }
-        });
-
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int choice = JOptionPane.showConfirmDialog(EndScreen.this, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    closeEndScreen();
-                    System.exit(0);
-                }
-            }
-        });
-
-        buttonPanel.add(startButton);
-        buttonPanel.add(backButton);
+        exitButton.addActionListener(e -> buttonActionPerformed(e));
         buttonPanel.add(exitButton);
 
-        add(gameOverLabel, BorderLayout.NORTH);
-        add(scoreLabel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        buttonContainer.add(buttonPanel);
+        add(buttonContainer, BorderLayout.SOUTH);
+
+        endFrame = new JFrame("Flappy Bird");
+        endFrame.add(this);
+        endFrame.setSize(600, 600);
+        endFrame.setResizable(false);
+        endFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        endFrame.setLocationRelativeTo(null);
+        endFrame.setVisible(true);
+
+        Listener listener = new Listener(endFrame);
+        endFrame.addWindowListener(listener);
     }
 
-    public void setScore(int score) {
-        scoreLabel.setText("SCORE: " + score);
-    }
-
-    private void closeEndScreen() {
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        frame.dispose();
-    }
-
-    private void startGame() {
-        JFrame frame = new JFrame("Flappy Bird");
-        FlappyBird flappyBird = new FlappyBird();
-        frame.getContentPane().add(flappyBird);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        Listener listener = new Listener(frame);
-        frame.addWindowListener(listener);
+    private void buttonActionPerformed(ActionEvent e) {
+        if (e.getSource() == restartButton) {
+            endFrame.dispose();
+            JFrame frame = new JFrame("Flappy Bird");
+            FlappyBird flappyBird = new FlappyBird(new ImageIcon(getClass().getResource("bird_image.png")).getImage()); // Change "bird_image.png" to your actual bird image path
+            frame.getContentPane().add(flappyBird);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setResizable(false);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            Listener listener = new Listener(frame);
+            frame.addWindowListener(listener);
+        } else if (e.getSource() == menuButton) {
+            endFrame.dispose();
+            new Menu();
+        } else if (e.getSource() == exitButton) {
+            int choice = JOptionPane.showConfirmDialog(endFrame, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                endFrame.dispose();
+                System.exit(0);
+            }
+        }
     }
 }
