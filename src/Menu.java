@@ -27,7 +27,6 @@ public class Menu extends JPanel {
 
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         buttonContainer.setOpaque(false);
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4, 1, 0, 20));
         buttonPanel.setBackground(Color.BLACK);
@@ -71,7 +70,7 @@ public class Menu extends JPanel {
         menuFrame.addWindowListener(listener);
     }
 
-    private void buttonActionPerformed(ActionEvent e) {
+    public void buttonActionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             if (!selectedBirdImage.equals("")) {
                 menuFrame.dispose();
@@ -100,7 +99,7 @@ public class Menu extends JPanel {
         }
     }
 
-    private void selectBird() {
+    public void selectBird() {
         menuFrame.dispose();
         JFrame frame = new JFrame("Bird Chooser");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
