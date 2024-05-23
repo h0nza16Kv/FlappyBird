@@ -52,13 +52,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         start();
 
         placePipeTimer = new Timer(1700, e -> placePipes());
-        placePipeTimer.start();
 
         gameLoop = new Timer(1000 / 50, this);
-        gameLoop.start();
-
         secondTimer = new Timer(1000, e -> updateTimer());
-        secondTimer.start();
     }
 
     public void start() {
@@ -161,14 +157,14 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
                 score += 0.5;
                 pipe.setPassed(true);
             }
-            if (!collisionDisabled && collision(bird, pipe)) {
+            if (!collisionDisabled && collisionPipe(bird, pipe)) {
                 gameOver = true;
             }
         }
 
         for (PowerUp powerUp : powerUps) {
             powerUp.setX(powerUp.getX() + (int) (-3 * gameSpeed));
-            if (collision(bird, powerUp)) {
+            if (collisionPoweUP(bird, powerUp)) {
                 powerUps.remove(powerUp);
                 activatePowerUp();
                 break;
@@ -180,12 +176,12 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
-    public boolean collision(Bird a, Pipe b) {
+    public boolean collisionPipe(Bird a, Pipe b) {
         return a.getX() < b.getX() + b.getWidth() && a.getX() + a.getWidth() > b.getX() &&
                 a.getY() < b.getY() + b.getHeight() && a.getY() + a.getHeight() > b.getY();
     }
 
-    public boolean collision(Bird a, PowerUp b) {
+    public boolean collisionPoweUP(Bird a, PowerUp b) {
         return a.getX() < b.getX() + b.getWidth() && a.getX() + a.getWidth() > b.getX() &&
                 a.getY() < b.getY() + b.getHeight() && a.getY() + a.getHeight() > b.getY();
     }
@@ -213,6 +209,11 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (!gameLoop.isRunning() && !placePipeTimer.isRunning() && !secondTimer.isRunning()) {
+                placePipeTimer.start();
+                secondTimer.start();
+                gameLoop.start();
+            }
             bird.setVelocityY(-10);
             clickCount++;
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
@@ -247,6 +248,11 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (!gameLoop.isRunning() && !placePipeTimer.isRunning() && !secondTimer.isRunning()) {
+            placePipeTimer.start();
+            secondTimer.start();
+            gameLoop.start();
+        }
         bird.setVelocityY(-10);
         clickCount++;
     }
