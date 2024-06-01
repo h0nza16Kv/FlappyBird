@@ -8,46 +8,6 @@ public class Menu extends JPanel {
     private String selectedBirdImage = "";
 
 
-    public JButton getStartButton() {
-        return startButton;
-    }
-
-    public void setStartButton(JButton startButton) {
-        this.startButton = startButton;
-    }
-
-    public JButton getSelectBirdButton() {
-        return selectBirdButton;
-    }
-
-    public void setSelectBirdButton(JButton selectBirdButton) {
-        this.selectBirdButton = selectBirdButton;
-    }
-
-    public JButton getLeaderboardButton() {
-        return leaderboardButton;
-    }
-
-    public void setLeaderboardButton(JButton leaderboardButton) {
-        this.leaderboardButton = leaderboardButton;
-    }
-
-    public JButton getExitButton() {
-        return exitButton;
-    }
-
-    public void setExitButton(JButton exitButton) {
-        this.exitButton = exitButton;
-    }
-
-    public JFrame getMenuFrame() {
-        return menuFrame;
-    }
-
-    public void setMenuFrame(JFrame menuFrame) {
-        this.menuFrame = menuFrame;
-    }
-
     public String getSelectedBirdImage() {
         return selectedBirdImage;
     }
