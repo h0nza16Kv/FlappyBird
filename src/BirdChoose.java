@@ -9,6 +9,20 @@ public class BirdChoose extends JPanel {
     private JLabel birdLabel;
     private Menu menuPanel;
 
+    public int getCurrentBirdIndex() {
+        return currentBirdIndex;
+    }
+
+    public void setCurrentBirdIndex(int currentBirdIndex) {
+        this.currentBirdIndex = currentBirdIndex;
+    }
+
+
+    /**
+     * Constructor to create a bird image selection panel
+     *
+     * @param menuPanel The main menu panel
+     */
     public BirdChoose(Menu menuPanel) {
         this.menuPanel = menuPanel;
         setLayout(new BorderLayout());
@@ -32,7 +46,7 @@ public class BirdChoose extends JPanel {
         controlPanel.setBackground(Color.BLACK);
         controlPanel.setLayout(new GridBagLayout());
 
-        JButton selectButton = new JButton("Select");
+        JButton selectButton = new JButton("SELECT");
         selectButton.setPreferredSize(new Dimension(360, 85));
         selectButton.setBackground(Color.YELLOW);
         selectButton.setOpaque(true);
@@ -52,6 +66,11 @@ public class BirdChoose extends JPanel {
         });
     }
 
+    /**
+     * Handles a keyboard event.
+     *
+     * @param e The keyboard event.
+     */
     public void KeyEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
@@ -64,10 +83,17 @@ public class BirdChoose extends JPanel {
         updateBirdImage();
     }
 
+    /**
+     * Updates the displayed bird image according to the current index.
+     */
+    //ChatGPT
     public void updateBirdImage() {
         birdLabel.setIcon(createImageIcon(birdImage[currentBirdIndex]));
     }
 
+    /**
+     * Handles the bird image selection event and passes the selected image to the main menu.
+     */
     public void selectActionPerformed() {
         String selectedBirdImageName = birdImage[currentBirdIndex];
         menuPanel.setSelectedBirdImage(selectedBirdImageName);
@@ -75,6 +101,12 @@ public class BirdChoose extends JPanel {
         frame.dispose();
     }
 
+    /**
+     * Creates an ImageIcon from the given file
+     *
+     * @param fileName name of file with image
+     * @return An ImageIcon created from the given file
+     */
     //ChatGPT
     public ImageIcon createImageIcon(String fileName) {
         URL imgURL = getClass().getResource(fileName);

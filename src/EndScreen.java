@@ -10,6 +10,12 @@ public class EndScreen extends JPanel {
 
     private Image birdImage;
 
+    /**
+     * Constructor for EndScreen
+     *
+     * @param score Score that we got in last game
+     * @param birdImage Bird that we used in last game
+     */
     public EndScreen(int score, Image birdImage) {
         this.birdImage = birdImage;
 
@@ -76,10 +82,9 @@ public class EndScreen extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void setScore(int score) {
-        scoreLabel.setText("SCORE: " + score);
-    }
-
+    /**
+     * Restart game after press button "RESTART".
+     */
     public void restartGame() {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.dispose();
@@ -95,19 +100,26 @@ public class EndScreen extends JPanel {
         newFrame.addWindowListener(listener);
     }
 
-
+    /**
+     * Back to menu after press button "BACK TO MENU"
+     */
     public void backToMenu() {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.dispose();
         new Menu();
     }
 
+    /**
+     * Exit from the gamen after press button "EXIT"
+     */
     public void exitGame() {
         int choice = JOptionPane.showConfirmDialog(this, "Do you really want to close the window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            frame.dispose();
-            System.exit(0);
+            if (frame != null) {
+                frame.dispose();
+                System.exit(0);
+            }
         }
     }
 }

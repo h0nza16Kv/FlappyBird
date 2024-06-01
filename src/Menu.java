@@ -7,6 +7,54 @@ public class Menu extends JPanel {
     private JFrame menuFrame;
     private String selectedBirdImage = "";
 
+
+    public JButton getStartButton() {
+        return startButton;
+    }
+
+    public void setStartButton(JButton startButton) {
+        this.startButton = startButton;
+    }
+
+    public JButton getSelectBirdButton() {
+        return selectBirdButton;
+    }
+
+    public void setSelectBirdButton(JButton selectBirdButton) {
+        this.selectBirdButton = selectBirdButton;
+    }
+
+    public JButton getLeaderboardButton() {
+        return leaderboardButton;
+    }
+
+    public void setLeaderboardButton(JButton leaderboardButton) {
+        this.leaderboardButton = leaderboardButton;
+    }
+
+    public JButton getExitButton() {
+        return exitButton;
+    }
+
+    public void setExitButton(JButton exitButton) {
+        this.exitButton = exitButton;
+    }
+
+    public JFrame getMenuFrame() {
+        return menuFrame;
+    }
+
+    public void setMenuFrame(JFrame menuFrame) {
+        this.menuFrame = menuFrame;
+    }
+
+    public String getSelectedBirdImage() {
+        return selectedBirdImage;
+    }
+
+    /**
+     * Constructor for Menu
+     */
     public Menu() {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
@@ -70,6 +118,11 @@ public class Menu extends JPanel {
         menuFrame.addWindowListener(listener);
     }
 
+    /**
+     * Handles menu button actions
+     *
+     * @param e Button event
+     */
     public void buttonActionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             if (!selectedBirdImage.equals("")) {
@@ -99,9 +152,12 @@ public class Menu extends JPanel {
         }
     }
 
+    /**
+     * Open BirdChoose for choose bird
+     */
     public void selectBird() {
         menuFrame.dispose();
-        JFrame frame = new JFrame("Bird Chooser");
+        JFrame frame = new JFrame("Flappy Bird");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         BirdChoose birdChoose = new BirdChoose(this);
         frame.add(birdChoose);
@@ -111,6 +167,11 @@ public class Menu extends JPanel {
         frame.setResizable(false);
     }
 
+    /**
+     * Set selected bird image
+     *
+     * @param selectedBirdImage Path to selected bird image
+     */
     public void setSelectedBirdImage(String selectedBirdImage) {
         this.selectedBirdImage = selectedBirdImage;
         menuFrame.setVisible(true);

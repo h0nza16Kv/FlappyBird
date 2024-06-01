@@ -9,8 +9,11 @@ import java.io.IOException;
 public class LeaderboardFrame extends JFrame {
     private JTextArea leaderboardTextArea;
 
+    /**
+     * Leaderboard constructor
+     */
     public LeaderboardFrame() {
-        setTitle("Leaderboard");
+        setTitle("Flappy Bird");
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -69,6 +72,12 @@ public class LeaderboardFrame extends JFrame {
         this.setResizable(false);
     }
 
+    /**
+     * Creates button
+     *
+     * @param text Button text
+     * @return New button
+     */
     public JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 18));
@@ -78,6 +87,9 @@ public class LeaderboardFrame extends JFrame {
         return button;
     }
 
+    /**
+     * Retrieves scores from a file and displays them in a text area
+     */
     public void loadLeaderboardFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader("leaderboard.txt"))) {
             String line;
@@ -93,6 +105,12 @@ public class LeaderboardFrame extends JFrame {
         }
     }
 
+    /**
+     * Returns a string to indicate the ranking position
+     *
+     * @param number Rank number
+     * @return Ranking designation
+     */
     public String getPlace(int number) {
         if (number % 100 >= 11 && number % 100 <= 13) {
             return number + "th";

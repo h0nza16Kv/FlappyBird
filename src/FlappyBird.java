@@ -37,6 +37,35 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
     private int powerUpTimeLeft;
     private Image birdImage;
 
+    public ArrayList<Pipe> getPipes() {
+        return pipes;
+    }
+
+    public ArrayList<PowerUp> getPowerUps() {
+        return powerUps;
+    }
+
+
+    public void setPipeCounter(int pipeCounter) {
+        this.pipeCounter = pipeCounter;
+    }
+
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
+
+    public int getPipeWidth() {
+        return pipeWidth;
+    }
+
+
+    /**
+     * FlappyBird constructor
+     *
+     * @param birdImage Bird image
+     */
     public FlappyBird(Image birdImage) {
         this.birdImage = birdImage;
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -44,7 +73,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         addKeyListener(this);
         addMouseListener(this);
 
-        topPipeImg = new ImageIcon(getClass().getResource("/toppipe.png")).getImage();
+        topPipeImg = new ImageIcon(getClass().getResource("/toppipee.png")).getImage();
         bottomPipeImg = new ImageIcon(getClass().getResource("/bottompipe.png")).getImage();
         powerUpImg = new ImageIcon(getClass().getResource("/powerup.png")).getImage();
         backgroundImg = new ImageIcon(getClass().getResource("/background.png")).getImage();
@@ -52,11 +81,13 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         start();
 
         placePipeTimer = new Timer(1700, e -> placePipes());
-
         gameLoop = new Timer(1000 / 50, this);
         secondTimer = new Timer(1000, e -> updateTimer());
     }
 
+    /**
+     * Method for starting the game
+     */
     public void start() {
         bird = new Bird(birdImage, boardHeight / 8, boardWidth / 2, birdWidth, birdHeight);
         pipes = new ArrayList<>();
@@ -73,6 +104,11 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         powerUpTimeLeft = 0;
     }
 
+    /**
+     * A method for processing game events
+     *
+     * @param e Action event
+     */
     public void actionPerformed(ActionEvent e) {
         if (!paused && !gameOver) {
             movement();
@@ -83,6 +119,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
+    /**
+     * A method for the endgame after dead
+     */
     public void endGame() {
         gameLoop.stop();
         placePipeTimer.stop();
@@ -100,19 +139,27 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         frame.repaint();
     }
 
+    //
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         graphics(g);
     }
+    //
 
+    /**
+     * Method for rendering game objects
+     *
+     * @param g graphics
+     */
     public void graphics(Graphics g) {
+        //
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null);
         g.drawImage(bird.getImg(), bird.getX(), bird.getY(), bird.getWidth(), bird.getHeight(), null);
         for (Pipe pipe : pipes) {
             g.drawImage(pipe.getImg(), pipe.getX(), pipe.getY(), pipe.getWidth(), pipe.getHeight(), null);
         }
-
+        //
         for (PowerUp powerUp : powerUps) {
             g.drawImage(powerUp.getImg(), powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight(), null);
         }
@@ -147,6 +194,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
+    /**
+     * Method for updating game objects (movement)
+     */
     public void movement() {
         bird.setY(bird.getY() + (int) (bird.getVelocityY() * gameSpeed));
         bird.setVelocityY(bird.getVelocityY() + bird.getGravity());
@@ -164,7 +214,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
 
         for (PowerUp powerUp : powerUps) {
             powerUp.setX(powerUp.getX() + (int) (-3 * gameSpeed));
-            if (collisionPoweUP(bird, powerUp)) {
+            if (collisionPowerUp(bird, powerUp)) {
                 powerUps.remove(powerUp);
                 activatePowerUp();
                 break;
@@ -176,16 +226,36 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
+
+    /**
+     * Check for collision between bird and pipe
+     *
+     * @param a The bird object
+     * @param b The pipe object
+     * @return true if a collision occurred, false otherwise
+     */
+    //
     public boolean collisionPipe(Bird a, Pipe b) {
         return a.getX() < b.getX() + b.getWidth() && a.getX() + a.getWidth() > b.getX() &&
                 a.getY() < b.getY() + b.getHeight() && a.getY() + a.getHeight() > b.getY();
     }
+    //
 
-    public boolean collisionPoweUP(Bird a, PowerUp b) {
+    /**
+     * Collision check between bird and power up.
+     *
+     * @param a The bird object.
+     * @param b The power up object.
+     * @return true if a collision occurred, false otherwise.
+     */
+    public boolean collisionPowerUp(Bird a, PowerUp b) {
         return a.getX() < b.getX() + b.getWidth() && a.getX() + a.getWidth() > b.getX() &&
                 a.getY() < b.getY() + b.getHeight() && a.getY() + a.getHeight() > b.getY();
     }
 
+    /**
+     * Method for update time
+     */
     public void updateTimer() {
         if (!paused && !gameOver) {
             secondsElapsed++;
@@ -203,6 +273,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
     public void keyTyped(KeyEvent e) {
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
     }
 
@@ -221,6 +292,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
+    /**
+     * Method for pausing the game
+     */
     public void pause() {
         paused = !paused;
         if (paused) {
@@ -273,6 +347,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
     public void mouseExited(MouseEvent e) {
     }
 
+    /**
+     * Method for placing pipes and power ups
+     */
     public void placePipes() {
         int gap = 200;
         int minHeight = 50;
@@ -293,7 +370,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         pipes.add(bottomPipe);
 
         pipeCounter++;
-        if (pipeCounter >= 10 && pipeCounter % 10 == 0) {
+        if (pipeCounter >= 15 && pipeCounter % 15 == 0) {
             int powerUpX = startX + pipeWidth / 2 - birdWidth / 2;
             int powerUpY = topPipeHeight + (gap - birdHeight) / 2;
             PowerUp powerUp = new PowerUp(powerUpImg, powerUpX, powerUpY, birdWidth, birdHeight);
@@ -301,10 +378,13 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 
+    /**
+     * Method for activate the power up
+     */
     public void activatePowerUp() {
         collisionDisabled = true;
         isPowerUpActive = true;
-        powerUpTimeLeft = 5;
+        powerUpTimeLeft = 10;
         if (!paused) {
             powerUpTimer = new Timer(1000, e -> {
                 powerUpTimeLeft--;
@@ -318,4 +398,3 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener, M
         }
     }
 }
-

@@ -53,6 +53,10 @@ public class Bird {
     public int getGravity() {
         return gravity;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
 }
 
 
